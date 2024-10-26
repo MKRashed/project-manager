@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-export default function FormModal({ setModal, onSubmitData}){
+export default function FormModal({ setModal, editTaskData, onSubmitData}){
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState( ()=> editTaskData || {
         id: crypto.randomUUID(),
         taskName: '',
         category: '',
@@ -19,8 +19,16 @@ export default function FormModal({ setModal, onSubmitData}){
     };
 
     const handleSubmit = (e) => {
+
         e.preventDefault();
-        onSubmitData(formData);
+
+        if (!formData.taskName || !formData.category || !formData.description || !formData.dueDate) {
+            alert('Please fill in all the fields.');
+            return;
+        }
+
+        onSubmitData(formData);        
+
         setFormData({ 
             id: crypto.randomUUID(),
             taskName: '', 
@@ -97,6 +105,7 @@ export default function FormModal({ setModal, onSubmitData}){
                         onChange={handleChange}
                         className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                         >
+                            <option value="">Select</option>
                             <option value="todo">To-Do</option>
                             <option value="inprogress">On Progress</option>
                             <option value="done">Done</option>

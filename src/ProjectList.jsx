@@ -11,6 +11,7 @@ export default function ProjectList(){
     const [ modal, setModal ] = useState(false);
     const { searchValue, setSearchValue } = useContext(ProjectContext);
     const [taskData, setTaskData] = useState([]);
+    const [editTaskData, setEditTaskData] = useState(null);
 
     const todoData = taskData.filter((task) => task.category === 'todo');
     const onProgressData = taskData.filter((task) => task.category === 'inprogress');
@@ -18,12 +19,45 @@ export default function ProjectList(){
     const reviseData = taskData.filter((task) => task.category === 'revised');
 
     const handleSubmit = (newTask) => {
-        setTaskData((prevTasks) => [...prevTasks, newTask]); 
+
+      if (editTaskData) {
+
+        const updatedIncomes = taskData.map((task) =>
+          task.id === editTaskData.id ? { ...task, ...newTask } : task
+        );
+  
+        setTaskData(updatedIncomes);  
+        setEditTaskData(null);
         setModal(!modal);
+  
+      } else {
+        const updatedIncomes = [...taskData, newTask ];
+  
+        setTaskData(updatedIncomes);  
+        setEditTaskData(null);
+        setModal(!modal);
+      }
     };
 
-console.log({
-    todoData, onProgressData, doneData, reviseData, taskData});
+    const handleDelete = (taskId) => {
+        setTaskData((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    }
+
+    const handleEdit = (taskId) => { 
+      const taskToEdit = taskData.find((task) => task.id === taskId);
+      console.log(taskToEdit, taskData, taskId);
+      
+
+      if (taskToEdit) {
+        setEditTaskData(taskToEdit);
+        setModal(true);
+      }
+  }  
+
+  const handleModal = () => {
+      setEditTaskData(null);
+      setModal(!modal);
+  } 
 
 
 
@@ -57,27 +91,37 @@ console.log({
                 Add
               </button>
 
+
               {modal && (
-                    <FormModal setModal={setModal} onSubmitData={handleSubmit} />
-                )}
+                <FormModal setModal={handleModal} 
+                onSubmitData={handleSubmit} 
+                editTaskData={editTaskData} />
+              )}
             </div>
           </div>
 
           <div className="-mx-2 mb-6 flex flex-wrap">
             {/* <!-- Todo --> */}
-            <ToDoList title="To Do" tasks={todoData} />
+            <ToDoList title="To Do" tasks={todoData} 
+             onDelete={handleDelete}
+             onEdit={handleEdit}
+              />
             
             {/* <!-- On Progress --> */}
-            <OnProgressList title="On Progress" tasks={onProgressData} />
+            <OnProgressList title="On Progress" tasks={onProgressData} 
+             onDelete={handleDelete}
+             onEdit={handleEdit} />
             
 
             {/* <!-- Done --> */}
-            <DoneList title="Done" tasks={doneData}/>
+            <DoneList title="Done" tasks={doneData}  onDelete={handleDelete}
+             onEdit={handleEdit} />
             
 
             {/* Revised  */}
 
-            <ReviseList title="Revise" tasks={reviseData}/>
+            <ReviseList title="Revise" tasks={reviseData}  onDelete={handleDelete}
+             onEdit={handleEdit} />
             
           </div>
         </div>
