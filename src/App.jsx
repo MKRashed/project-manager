@@ -6,7 +6,9 @@ import { ProjectContext } from './context'
 import { initialSearch, searchReducer } from './reducers/searchReducer'
 
 function App() {
+
   const  [ state, dispatch ] = useReducer(searchReducer, initialSearch);
+  
   return (
     <>
       <ProjectContext.Provider value={{ state, dispatch }} >
