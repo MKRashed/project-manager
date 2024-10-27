@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react'
+import { useReducer } from 'react'
 import Header from './Header'
 import ProjectList from './ProjectList'
 import SideBar from './SideBar'
@@ -12,7 +12,6 @@ function App() {
   return (
     <>
     <ProjectContext.Provider value={{ state, dispatch }} >
-      {/* <TaskContent.Provider value={{ state, dispatch }} > */}
         <div className="bg-gray-900 text-white">
           <div className="flex h-screen">
           <SideBar/>
@@ -22,7 +21,6 @@ function App() {
           </main>
           </div>
         </div>
-      {/* </TaskContent.Provider> */}
     </ProjectContext.Provider>
     </>
   )
