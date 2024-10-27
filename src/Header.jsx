@@ -3,7 +3,7 @@ import { ProjectContext } from "./context";
 
 export default function Header(){
 
-    const {searchValue, setSearchValue} = useContext(ProjectContext);
+    const  { dispatch } = useContext(ProjectContext);
 
     const handleSearch = (e) => {
 
@@ -11,7 +11,10 @@ export default function Header(){
 
         const searchValue = e.target.value;
 
-        setSearchValue(searchValue);
+        dispatch({
+          type: 'SEARCH',
+          payload: searchValue
+        });
     };
     
     return (

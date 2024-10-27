@@ -1,29 +1,28 @@
-import { useState } from 'react'
-import SideBar from './SideBar'
-import ProjectList from './ProjectList'
+import { useReducer, useState } from 'react'
 import Header from './Header'
-
+import ProjectList from './ProjectList'
+import SideBar from './SideBar'
 import { ProjectContext } from './context'
+import { initialSearch, searchReducer } from './reducers/searchReducer'
 
 
 function App() {
-
-  const [ searchValue, setSearchValue ] = useState('');
+  const  [ state, dispatch ] = useReducer(searchReducer, initialSearch );
 
   return (
     <>
-    <ProjectContext.Provider value={{ searchValue, setSearchValue}} >
-
-      <div className="bg-gray-900 text-white">
-        <div className="flex h-screen">
-        <SideBar/>
-        <main className='flex-1 overflow-y-auto overflow-x-hidden'>
-            <Header/>
-            <ProjectList/>
-        </main>
+    <ProjectContext.Provider value={{ state, dispatch }} >
+      {/* <TaskContent.Provider value={{ state, dispatch }} > */}
+        <div className="bg-gray-900 text-white">
+          <div className="flex h-screen">
+          <SideBar/>
+          <main className='flex-1 overflow-y-auto overflow-x-hidden'>
+              <Header/>
+              <ProjectList/>
+          </main>
+          </div>
         </div>
-      </div>
-
+      {/* </TaskContent.Provider> */}
     </ProjectContext.Provider>
     </>
   )

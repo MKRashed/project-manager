@@ -9,14 +9,21 @@ import { ProjectContext } from "./context";
 export default function ProjectList(){
 
     const [ modal, setModal ] = useState(false);
-    const { searchValue, setSearchValue } = useContext(ProjectContext);
+
+    const { state } = useContext(ProjectContext);
+
     const [taskData, setTaskData] = useState([]);
+
     const [editTaskData, setEditTaskData] = useState(null);
 
-    const todoData = taskData.filter((task) => task.category === 'todo');
-    const onProgressData = taskData.filter((task) => task.category === 'inprogress');
-    const doneData = taskData.filter((task) => task.category === 'done');
-    const reviseData = taskData.filter((task) => task.category === 'revised');
+    const filteredTaskData = taskData.filter(task => 
+      task.taskName.toLowerCase().includes(state.search.toLowerCase())
+    );
+
+    const todoData = filteredTaskData.filter((task) => task.category === 'todo');
+    const onProgressData = filteredTaskData.filter((task) => task.category === 'inprogress');
+    const doneData = filteredTaskData.filter((task) => task.category === 'done');
+    const reviseData = filteredTaskData.filter((task) => task.category === 'revised');    
 
     const handleSubmit = (newTask) => {
 
@@ -45,9 +52,6 @@ export default function ProjectList(){
 
     const handleEdit = (taskId) => { 
       const taskToEdit = taskData.find((task) => task.id === taskId);
-      console.log(taskToEdit, taskData, taskId);
-      
-
       if (taskToEdit) {
         setEditTaskData(taskToEdit);
         setModal(true);

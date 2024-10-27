@@ -2,4 +2,7 @@ import { createContext } from "react";
 
 const ProjectContext = createContext();
 
-export {ProjectContext};
+const TaskText = createContext(); 
+
+export { ProjectContext, TaskText };
+
