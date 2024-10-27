@@ -2,7 +2,7 @@ const initialSearch = {
     search: '',
 }
 
-const  searchReducer = (state = initialSearch, action) => { 
+const  searchReducer = (state , action) => { 
     switch (action.type) { 
 
         case  'SEARCH':
@@ -14,5 +14,5 @@ const  searchReducer = (state = initialSearch, action) => {
 }
 
 
-export { searchReducer, initialSearch }
+export { initialSearch, searchReducer }
 
