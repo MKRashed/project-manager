@@ -3,6 +3,7 @@ const initialSearch = {
 }
 
 const  searchReducer = (state , action) => { 
+    
     switch (action.type) { 
         case  'SEARCH':
             return { ...state, search: action.payload }
