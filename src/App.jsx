@@ -3,7 +3,7 @@ import Header from './Header'
 import ProjectList from './ProjectList'
 import SideBar from './SideBar'
 import { ProjectContext } from './context'
-import { initialSearch, searchReducer } from './reducers/searchReducer.jsx'
+import { initialSearch, searchReducer } from './reducers/searchReducer'
 
 function App() {
   const  [ state, dispatch ] = useReducer(searchReducer, initialSearch );
