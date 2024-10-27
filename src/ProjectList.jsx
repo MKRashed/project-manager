@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import FormModal from "./FormModal";
 import ToDoList from "./components/ToDoLIst";
-import OnProgressList from "./components/OnProgressLIst";
+import OnProgressList from "./components/OnProgressList";
 import DoneList from "./components/DoneList";
 import ReviseList from "./components/ReviseList";
 import { ProjectContext } from "./context";
